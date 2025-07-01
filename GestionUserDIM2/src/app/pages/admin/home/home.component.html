@@ -1,0 +1,66 @@
+<!-- Navbar -->
+
+<nav class="navbar">
+  <a class="layout-topbar-logo" routerLink="/">
+    <img src="assets/img/ooredoo_logo.png" alt="Ooredoo" width="250" height="60" />
+  </a>
+  <div class="navbar-icons">
+    <i class="fas fa-user-circle" title="Profil"></i>
+    <i class="fas fa-sign-out-alt" title="Se déconnecter" (click)="confirmLogout()"></i>
+
+  </div>
+</nav>
+
+
+
+
+<!-- Contenu principal -->
+<div class="landing-page">
+  <!-- Zone de gauche (texte) -->
+
+  <div class="intro-section">
+    <h1>Bienvenue sur <span class="highlight">CTI-TOOLS</span></h1>
+
+
+  </div>
+
+  <!-- Zone de droite (bulles) -->
+  <div class="bubbles-section">
+    <div class="bubble" *hasPermission="'users.read'" (click)="navigateTo('users')">
+      <i class="fas fa-users"></i>
+      <span>Utilisateurs</span>
+    </div>
+    <div class="bubble" *hasPermission="'roles.read'" (click)="navigateTo('liste-roles')">
+      <i class="fas fa-user-shield"></i>
+      <span>Rôles</span>
+    </div>
+    <div class="bubble" *hasPermission="'users.create'" (click)="navigateTo('register')">
+      <i class="fas fa-user-plus"></i>
+      <span>Créer Utilisateur</span>
+    </div>
+    <div class="bubble" *hasPermission="'blacklist.read'" (click)="navigateTo('blacklist')">
+      <i class="fas fa-ban"></i>
+      <span>Blacklist</span>
+    </div>
+    <div class="bubble" *hasPermission="'blhistory.read'" (click)="navigateTo('historique')">
+      <i class="fas fa-history"></i>
+      <span>Historique</span>
+    </div>
+    <div class="bubble" *hasPermission="'dashboard.read'" (click)="navigateTo('dashboard')">
+      <i class="fas fa-chart-line"></i>
+      <span>Dashboard</span>
+    </div>
+    <div class="bubble" *hasPermission="'pdv.read'" (click)="navigateTo('pdv')">
+      <i class="fas fa-store"></i>
+      <span>PDV</span>
+    </div>
+    <div class="bubble" *hasPermission="'pdvhistory.read'" (click)="navigateTo('pdvhistory')">
+      <i class="fas fa-clipboard-list"></i>
+      <span>Historique PDV</span>
+    </div>
+    <div class="bubble" *hasPermission="'permissionlists.read'" (click)="navigateTo('permission-lists')">
+      <i class="fas fa-tasks"></i>
+      <span>Permissions</span>
+    </div>
+  </div>
+</div>

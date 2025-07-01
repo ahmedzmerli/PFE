@@ -1,0 +1,177 @@
+/* ========== GLOBAL RESET ========== */
+:host {
+  display: block;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+}
+
+html, body {
+  margin: 0 !important;
+  padding: 0 !important;
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+router-outlet + * {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+  border-top: none !important;
+  box-shadow: none !important;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* ========== NAVBAR ========== */
+.navbar {
+  background: linear-gradient(to right,  #910000,#e40622) !important;
+  color: white !important;
+  padding: 16px 32px;
+  font-size: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-icons i {
+  font-size: 1.8rem;
+  color: white !important;
+  margin-left: 16px;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.navbar-icons i:hover {
+  color: #ffd1d1 !important;
+}
+
+/* ========== LAYOUT ========== */
+.landing-page {
+  display: flex;
+  flex-wrap: wrap;                // Active le retour à la ligne
+  justify-content: space-between;
+  align-items: center;
+  gap: 40px;                      // Espace entre les sections
+  min-height: 100vh;
+  padding: 40px;
+  background: white;
+  //background: linear-gradient(to right, #ed6d6d, #ffffff);
+  color: white;
+}
+
+/* ========== INTRO SECTION ========== */
+.intro-section {
+  flex: 1 1 40%;
+  max-width: 500px;
+  padding: 20px;
+}
+
+.intro-section h1 {
+  font-size: 2.8rem;
+  margin-bottom: 15px;
+}
+
+.highlight {
+  color: #fff;
+  background-color: #dc3545;
+  padding: 0 8px;
+  border-radius: 5px;
+}
+
+.intro-section p {
+  font-size: 1.1rem;
+  margin-bottom: 25px;
+}
+
+.cta-button {
+  padding: 10px 22px;
+  font-size: 1rem;
+  color: #dc3545;
+  background-color: white;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+
+.cta-button:hover {
+  background-color: #f8d7da;
+}
+
+/* ========== BUBBLES SECTION ========== */
+.bubbles-section {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 colonnes égales */
+  gap: 50px;
+  width: 50%;
+  padding: 40px;
+  justify-items: center; /* centre chaque bulle horizontalement */
+  align-items: center;
+}
+
+.bubble {
+  width: 110px;
+  height: 110px;
+  background-color: white;
+  color: #dc3545;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+.bubble:hover {
+  transform: scale(1.1);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+}
+
+.bubble i {
+  font-size: 1.8rem;
+  margin-bottom: 6px;
+  color: #dc3545;
+}
+
+.bubble span {
+  font-size: 0.9rem;
+  color: #dc3545;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+  .landing-page {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .intro-section,
+  .bubbles-section {
+    flex: 1 1 100%;
+    max-width: 100%;
+  }
+
+  .bubble {
+    width: 90px;
+    height: 90px;
+  }
+
+  .bubble i {
+    font-size: 1.5rem;
+  }
+
+  .bubble span {
+    font-size: 0.8rem;
+  }
+}
+
+
