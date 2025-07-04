@@ -4,38 +4,26 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "pdv_history")
+@Table(name = "pdv_history_dimii")
 public class PdvHistory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String msisdn;
-    private String nomPdv;
-    private String adresse;
-    private String codePdv;
+    @Column(name = "id_pdv_master")
+    private Long pdvMasterId;
 
-    private String username;      // qui a fait l'action
-    private String actionType;    // CREATE ou DELETE
+    private String username;
+
+    @Column(name = "action_type")
+    private String actionType;
+
+    @Column(name = "date_action")
     private LocalDateTime dateAction;
 
     public PdvHistory() {
     }
-
-    public PdvHistory(Long id, String msisdn, String nomPdv, String adresse, String codePdv,
-                      String username, String actionType, LocalDateTime dateAction) {
-        this.id = id;
-        this.msisdn = msisdn;
-        this.nomPdv = nomPdv;
-        this.adresse = adresse;
-        this.codePdv = codePdv;
-        this.username = username;
-        this.actionType = actionType;
-        this.dateAction = dateAction;
-    }
-
-    // Getters et Setters
 
     public Long getId() {
         return id;
@@ -45,36 +33,12 @@ public class PdvHistory {
         this.id = id;
     }
 
-    public String getMsisdn() {
-        return msisdn;
+    public Long getPdvMasterId() {
+        return pdvMasterId;
     }
 
-    public void setMsisdn(String msisdn) {
-        this.msisdn = msisdn;
-    }
-
-    public String getNomPdv() {
-        return nomPdv;
-    }
-
-    public void setNomPdv(String nomPdv) {
-        this.nomPdv = nomPdv;
-    }
-
-    public String getAdresse() {
-        return adresse;
-    }
-
-    public void setAdresse(String adresse) {
-        this.adresse = adresse;
-    }
-
-    public String getCodePdv() {
-        return codePdv;
-    }
-
-    public void setCodePdv(String codePdv) {
-        this.codePdv = codePdv;
+    public void setPdvMasterId(Long pdvMasterId) {
+        this.pdvMasterId = pdvMasterId;
     }
 
     public String getUsername() {

@@ -22,15 +22,11 @@ public class PdvHistoryController {
     public List<PdvHistoryDTO> getAll() {
         return historyRepository.findAll().stream().map(p -> {
             PdvHistoryDTO dto = new PdvHistoryDTO();
-            dto.setMsisdn(p.getMsisdn());
-            dto.setNomPdv(p.getNomPdv());
-            dto.setAdresse(p.getAdresse());
-            dto.setCodePdv(p.getCodePdv());
+            dto.setPdvMasterId(p.getPdvMasterId());
             dto.setUsername(p.getUsername());
             dto.setActionType(p.getActionType());
             dto.setDateAction(p.getDateAction());
             return dto;
         }).collect(Collectors.toList());
     }
-
 }

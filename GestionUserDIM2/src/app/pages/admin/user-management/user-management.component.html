@@ -9,12 +9,12 @@
       <button pButton icon="pi pi-user-plus" label="Ajouter un utilisateur"
               *hasPermission="'users.create'"
               class="p-button p-button-rounded p-button-outlined p-button-danger shadow-sm"
-              (click)="openRegisterModal()">
+              (click)="openRegisterModal()" style="margin-right:10px">
       </button>
       <button pButton icon="pi pi-user-edit" label="Assigner un rôle"
               *hasPermission="'users.roles.create'"
               class="p-button p-button-rounded p-button-outlined p-button-danger shadow-sm"
-              (click)="displayAssignModal = true">
+              (click)="displayAssignModal = true" style="margin-left:10px">
       </button>
     </div>
   </div>

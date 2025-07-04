@@ -1,9 +1,7 @@
 export interface PdvHistory {
-  msisdn: string;
-  nomPdv: string;
-  adresse: string;
-  codePdv: string;
+  pdvMasterId: number;
   username: string;
   actionType: string;
   dateAction: Date;
 }
+

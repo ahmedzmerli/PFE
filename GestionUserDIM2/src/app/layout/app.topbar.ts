@@ -39,11 +39,20 @@ import Swal from 'sweetalert2'; // 👉 SweetAlert2
 
         <div class="layout-topbar-menu hidden lg:block">
           <div class="layout-topbar-menu-content">
+            <button
+              type="button"
+              class="layout-topbar-action"
+              (click)="toggleDarkMode()"
+            >
+              <i class="pi pi-moon"></i>
+            </button>
             <button type="button" class="layout-topbar-action" (click)="confirmLogout()">
               <i class="pi pi-sign-out"></i>
 
 
             </button>
+
+
           </div>
         </div>
       </div>
@@ -83,4 +92,10 @@ export class AppTopbar {
       }
     });
   }
+
+  toggleDarkMode() {
+    const current = this.layoutService.layoutConfigValue.darkTheme;
+    this.layoutService.updateConfig({ darkTheme: !current });
+  }
+
 }

@@ -23,6 +23,15 @@ public class User implements UserDetails, Principal {
 
     @Id
     @GeneratedValue
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_seq")
+//    @SequenceGenerator(
+//            name = "user_seq",
+//            sequenceName = "CCADMIN.SEQ_USERS_DIMII", // nom exact de la séquence dans Oracle (avec ou sans CCADMIN selon config)
+//            allocationSize = 1
+//    )
+//    private Integer id;
+
     private Integer id;
 
     private String firstname;

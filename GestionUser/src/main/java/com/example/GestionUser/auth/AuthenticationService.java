@@ -42,7 +42,24 @@ public class AuthenticationService {
     @Value("${mailing.frontend.activation-url}")
     private String activationUrl;
 
-    public void register(RegistrationRequest request) throws MessagingException {
+//    public void register(RegistrationRequest request) throws MessagingException {
+//        if (userRepository.findByEmail(request.getEmail()).isPresent()) {
+//            throw new BusinessException(BusinessErrorCodes.EMAIL_ALREADY_EXISTS);
+//        }
+//
+//        User user = new User();
+//        user.setFirstname(request.getFirstname());
+//        user.setLastname(request.getLastname());
+//        user.setEmail(request.getEmail());
+//        user.setPassword(passwordEncoder.encode(request.getPassword()));
+//        user.setAccount_locked(false);
+//        user.setEnabled(false);
+//
+//        userRepository.save(user);
+//        sendValidationEmail(user);
+//    }
+
+    public void register(RegistrationRequest request) {
         if (userRepository.findByEmail(request.getEmail()).isPresent()) {
             throw new BusinessException(BusinessErrorCodes.EMAIL_ALREADY_EXISTS);
         }
@@ -53,11 +70,13 @@ public class AuthenticationService {
         user.setEmail(request.getEmail());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setAccount_locked(false);
-        user.setEnabled(false);
+        user.setEnabled(true); // <-- ACTIVE DIRECTEMENT !
 
         userRepository.save(user);
-        sendValidationEmail(user);
+
+        // On ne fait plus d'envoi de mail ni de génération de token
     }
+
 
     private void sendValidationEmail(User user) throws MessagingException {
         String newToken = generateAndSaveActivationToken(user);

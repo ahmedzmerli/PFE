@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface PdvMasterRepository extends JpaRepository<PdvMaster, String> {
-    Optional<PdvMaster> findByMsisdn(String msisdn);
+public interface PdvMasterRepository extends JpaRepository<PdvMaster, Long> {
+
 
 }

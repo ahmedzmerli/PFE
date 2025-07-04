@@ -33,9 +33,12 @@ public class UserController {
     @PreAuthorize("hasAuthority('users.create')")
     public ResponseEntity<?> createUser(@Valid @RequestBody RegistrationRequest request) throws MessagingException {
         authService.register(request);
+//        return ResponseEntity.accepted()
+//                .body(Collections.singletonMap("message",
+//                        "Utilisateur créé, un email d'activation a été envoyé."));
         return ResponseEntity.accepted()
-                .body(Collections.singletonMap("message",
-                        "Utilisateur créé, un email d'activation a été envoyé."));
+                .body(Collections.singletonMap("message", "Utilisateur créé et activé avec succès."));
+
     }
 
 

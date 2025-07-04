@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { TokenService } from './services/token.service';
+import {filter} from "rxjs";
 
 @Component({
   selector: 'app-root',
@@ -14,5 +15,7 @@ export class AppComponent {
     if (!this.tokenService.isTokenValid()) {
       this.router.navigate(['/login']);
     }
+
+
   }
 }

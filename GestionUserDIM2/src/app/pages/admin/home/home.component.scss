@@ -61,6 +61,7 @@ router-outlet + * {
   background: white;
   //background: linear-gradient(to right, #ed6d6d, #ffffff);
   color: white;
+  margin-top: -80px;
 }
 
 /* ========== INTRO SECTION ========== */
@@ -115,8 +116,8 @@ router-outlet + * {
 }
 
 .bubble {
-  width: 110px;
-  height: 110px;
+  width: 150px;
+  height: 150px;
   background-color: white;
   color: #dc3545;
   border-radius: 50%;
@@ -137,7 +138,7 @@ router-outlet + * {
 }
 
 .bubble i {
-  font-size: 1.8rem;
+  font-size: 2.2rem;
   margin-bottom: 6px;
   color: #dc3545;
 }
@@ -174,4 +175,22 @@ router-outlet + * {
   }
 }
 
+
+
+
+/* ========== FOOTER ========== */
+.footer {
+  width: 100%;
+  background: linear-gradient(to right, #910000, #e40622);
+  color: white;
+  text-align: center;
+  padding: 16px 0;
+  font-size: 0.95rem;
+  position: relative; /* reste sous le contenu */
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+}
 

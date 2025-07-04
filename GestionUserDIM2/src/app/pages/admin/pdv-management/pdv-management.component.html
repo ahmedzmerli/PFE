@@ -3,38 +3,50 @@
     <i class="pi pi-users me-2"></i> Gestion des Points de Vente
   </h2>
 
-  <!-- 🔧 Sélection des colonnes et bouton réinitialiser (sur la même ligne) -->
-  <div class="d-flex align-items-center justify-content-center gap-3 mb-3">
-    <p-multiSelect
-      [options]="cols"
-      [(ngModel)]="selectedColumns"
-      optionLabel="header"
-      placeholder="Afficher colonnes"
-      display="chip"
-      class="p-multiselect-sm border border-danger rounded-1 shadow-sm"
-      style="min-width: 250px;">
-    </p-multiSelect>
+  <!-- Sélecteur de colonnes -->
+  <div class="d-flex align-items-center justify-content-between flex-wrap gap-3 mb-3">
+    <div class="d-flex align-items-center gap-3">
+      <p-multiSelect
+        [options]="cols"
+        [(ngModel)]="selectedColumns"
+        optionLabel="header"
+        placeholder="Afficher colonnes"
+        display="chip"
+        class="p-multiselect-sm border border-danger rounded-1 shadow-sm"
+        [style]="{'min-width':'250px'}"
+      ></p-multiSelect>
 
-    <button
-      pButton
-      label="Réinitialiser colonnes"
-      icon="pi pi-refresh"
-      class="p-button-sm p-button-text text-danger ms-2"
-      (click)="resetColumns()">
-    </button>
+      <button
+        pButton
+        label="Réinitialiser colonnes"
+        icon="pi pi-refresh"
+        class="p-button-sm p-button-text text-danger ms-2"
+        (click)="resetColumns()">
+      </button>
+    </div>
+
+    <!-- Boutons principaux alignés à droite -->
+    <div class="text-end d-flex gap-2 flex-wrap">
+      <button
+        pButton
+        class="p-button p-button-rounded p-button-outlined p-button-danger shadow-sm"
+        icon="pi pi-plus"
+        label="Ajouter un PDV"
+        style="margin-right: 10px"
+        (click)="openAddModal()">
+      </button>
+
+      <button
+        pButton
+        class="p-button p-button-rounded p-button-outlined p-button-danger shadow-sm"
+        icon="pi pi-link"
+        label="Lier MSISDN existants"
+        (click)="openLinkModal()">
+      </button>
+    </div>
   </div>
 
-  <!-- 🔘 Bouton Ajouter (juste en dessous, bien centré ou à droite comme tu veux) -->
-  <div class="mb-3 text-end">
-    <button
-      pButton
-      class="p-button p-button-rounded p-button-outlined p-button-danger shadow-sm"
-      icon="pi pi-plus"
-      label="Ajouter un PDV"
-      (click)="openAddModal()">
-    </button>
-  </div>
-  <!-- 🔍 Filtres -->
+  <!-- Filtres -->
   <div class="card border-0 shadow-sm p-3 mb-4 bg-light">
     <div class="row g-3 align-items-end">
       <div class="col-md-4">
@@ -58,7 +70,7 @@
     </div>
   </div>
 
-  <!-- 📋 Tableau -->
+  <!-- Tableau des PDV -->
   <p-table [value]="filteredResults" [columns]="selectedColumns"
            [paginator]="true" [rows]="10" [rowsPerPageOptions]="[5, 10, 20]"
            [scrollable]="true" scrollHeight="400px"
@@ -71,24 +83,81 @@
     <ng-template pTemplate="body" let-row let-columns="columns">
       <tr>
         <ng-container *ngFor="let col of columns">
-          <td *ngIf="col.field !== 'Action'">
-            {{ row[col.field] }}
-          </td>
           <td *ngIf="col.field === 'Action'">
-            <button
-              pButton
-              icon="pi pi-trash"
-              class="p-button-sm p-button-rounded p-button-danger"
-              (click)="deletePdv(row.msisdn)"
-              title="Supprimer">
-            </button>
+            <div class="d-flex gap-2 flex-wrap">
+
+<!--              &lt;!&ndash; Voir MSISDN &ndash;&gt;-->
+<!--              <button-->
+<!--                pButton-->
+<!--                icon="pi pi-eye"-->
+<!--                class="p-button-sm p-button-text p-button-info"-->
+<!--                (click)="showMsisdns(row)"-->
+<!--                title="Voir les MSISDN">-->
+<!--              </button>-->
+
+              <!-- Modifier PDV -->
+              <button
+                pButton
+                icon="pi pi-pencil"
+                class="p-button-sm p-button-text p-button-warning me-2"
+                style="color:#dc3545;"
+                (click)="openEditModal(row)"
+                title="Modifier PDV">
+              </button>
+
+              <!-- Ajouter MSISDN -->
+              <button
+                pButton
+                icon="pi pi-plus"
+                class="p-button-sm p-button-rounded"
+                style="background-color:#f8d7da; color:#dc3545; margin-right:5px;"
+                (click)="openAddMsisdnModal(row.idPdvMaster)"
+                title="Ajouter MSISDN">
+              </button>
+
+              <!-- Supprimer MSISDN du pdv -->
+              <button
+                pButton
+                icon="pi pi-minus"
+                class="p-button-sm p-button-rounded"
+                style="background-color:#dc3545; color:white; border:none; margin-right:5px;"
+                (click)="openRemoveMsisdnModal(row)"
+                title="Supprimer un MSISDN">
+              </button>
+
+
+              <!-- Supprimer tout le PDV -->
+              <button
+                pButton
+                icon="pi pi-trash"
+                class="p-button-sm p-button-rounded"
+                style="background-color:#dc3545; color:white;"
+                (click)="deletePdv(row)"
+                title="Supprimer le PDV">
+              </button>
+
+            </div>
+
+
+
+
+          </td>
+          <td *ngIf="col.field !== 'Action'">
+            <ng-container [ngSwitch]="col.field">
+              <span *ngSwitchCase="'msisdns'">
+                {{ row.msisdns.join(', ') }}
+              </span>
+              <span *ngSwitchDefault>
+                {{ row[col.field] }}
+              </span>
+            </ng-container>
           </td>
         </ng-container>
       </tr>
     </ng-template>
   </p-table>
 
-  <!-- 🟢 Modal d'ajout -->
+  <!-- Modal Ajout PDV -->
   <p-dialog header="Ajouter un PDV" [(visible)]="displayAddModal" [modal]="true" [closable]="true"
             [dismissableMask]="true" [style]="{width: '400px'}" (onHide)="closeAddModal()">
     <form (ngSubmit)="addPdv()">
@@ -108,7 +177,7 @@
         <label class="form-label">Code PDV</label>
         <input pInputText [(ngModel)]="addPdvForm.codePdv" name="codePdv" class="form-control">
       </div>
-      <div class="mt-4 d-flex justify-content-center"style="gap: 2.5rem;">
+      <div class="mt-4 d-flex justify-content-center" style="gap: 2.5rem;">
         <button
           pButton
           type="button"
@@ -123,7 +192,140 @@
           class="p-button-danger">
         </button>
       </div>
+    </form>
+  </p-dialog>
 
+  <!-- Modal Ajout MSISDN -->
+  <p-dialog header="Ajouter un MSISDN" [(visible)]="displayAddMsisdnModal" [modal]="true" [closable]="true"
+            [dismissableMask]="true" [style]="{width: '400px'}" (onHide)="closeAddMsisdnModal()">
+    <form (ngSubmit)="addMsisdn()">
+      <div class="mb-3">
+        <label class="form-label">MSISDN *</label>
+        <input pInputText [(ngModel)]="newMsisdn" name="newMsisdn" class="form-control" required>
+      </div>
+      <div class="mt-4 d-flex justify-content-center" style="gap: 2.5rem;">
+        <button
+          pButton
+          type="button"
+          label="Annuler"
+          (click)="closeAddMsisdnModal()"
+          style="background-color: #e9ecef; color: #495057; border: none;">
+        </button>
+        <button
+          pButton
+          type="submit"
+          label="Ajouter"
+          style="background-color:#dc3545; color:white; border:none;">
+        </button>
+      </div>
+    </form>
+  </p-dialog>
+
+  <!-- Modal Edition PDV -->
+  <p-dialog header="Modifier le PDV" [(visible)]="displayEditModal" [modal]="true" [closable]="true"
+            [dismissableMask]="true" [style]="{width: '400px'}" (onHide)="closeEditModal()">
+    <form (ngSubmit)="updatePdv()">
+      <div class="mb-3">
+        <label class="form-label">Nom PDV *</label>
+        <input pInputText [(ngModel)]="editPdvForm.nomPdv" name="editNomPdv" class="form-control" required>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Adresse</label>
+        <input pInputText [(ngModel)]="editPdvForm.adresse" name="editAdresse" class="form-control">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Code PDV</label>
+        <input pInputText [(ngModel)]="editPdvForm.codePdv" name="editCodePdv" class="form-control">
+      </div>
+      <div class="mt-4 d-flex justify-content-center" style="gap: 2.5rem;">
+        <button
+          pButton
+          type="button"
+          label="Annuler"
+          (click)="closeEditModal()"
+          style="background-color: #e9ecef; color: #495057; border: none;">
+        </button>
+        <button
+          pButton
+          type="submit"
+          label="Mettre à jour"
+          style="background-color:#dc3545; color:white; border:none;">
+        </button>
+      </div>
+    </form>
+  </p-dialog>
+
+  <!-- Modal Liaison MSISDN existants -->
+  <p-dialog header="Lier MSISDN existants" [(visible)]="displayLinkModal" [modal]="true" [closable]="true"
+            [dismissableMask]="true" [style]="{width: '500px'}" (onHide)="closeLinkModal()">
+    <form (ngSubmit)="linkMsisdnsToPdv()">
+      <div class="mb-3">
+        <label class="form-label">MSISDN (séparés par des virgules) *</label>
+        <textarea [(ngModel)]="linkMsisdns" name="linkMsisdns"
+                  class="form-control" rows="3" required></textarea>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Nom PDV *</label>
+        <input pInputText [(ngModel)]="linkPdvForm.nomPdv" name="linkNomPdv" class="form-control" required>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Adresse</label>
+        <input pInputText [(ngModel)]="linkPdvForm.adresse" name="linkAdresse" class="form-control">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Code PDV</label>
+        <input pInputText [(ngModel)]="linkPdvForm.codePdv" name="linkCodePdv" class="form-control">
+      </div>
+      <div class="mt-4 d-flex justify-content-center" style="gap: 2.5rem;">
+        <button
+          pButton
+          type="button"
+          label="Annuler"
+          (click)="closeLinkModal()"
+          style="background-color: #e9ecef; color: #495057; border: none;">
+        </button>
+        <button
+          pButton
+          type="submit"
+          label="Lier"
+          style="background-color:#dc3545; color:white; border:none;">
+        </button>
+      </div>
+    </form>
+  </p-dialog>
+  <p-dialog header="Supprimer un MSISDN"
+            [(visible)]="displayRemoveMsisdnModal"
+            [modal]="true"
+            [closable]="true"
+            [dismissableMask]="true"
+            [style]="{width: '400px'}"
+            (onHide)="displayRemoveMsisdnModal = false">
+    <form (ngSubmit)="confirmRemoveMsisdn()">
+      <div class="mb-3">
+        <label class="form-label">Sélectionnez le MSISDN *</label>
+        <p-dropdown
+          [options]="msisdnsToRemove"
+          [(ngModel)]="selectedMsisdnToRemove"
+          name="selectedMsisdn"
+          placeholder="Choisir le MSISDN"
+          appendTo="body">
+        </p-dropdown>
+      </div>
+      <div class="mt-4 d-flex justify-content-center" style="gap:2rem;">
+        <button
+          pButton
+          type="button"
+          label="Annuler"
+          (click)="displayRemoveMsisdnModal = false"
+          style="background-color: #e9ecef; color: #495057; border:none;">
+        </button>
+        <button
+          pButton
+          type="submit"
+          label="Supprimer"
+          style="background-color:#dc3545; color:white; border:none;">
+        </button>
+      </div>
     </form>
   </p-dialog>
 

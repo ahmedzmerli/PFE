@@ -1,36 +1,38 @@
 package com.example.GestionUser.entities;
 
 import javax.persistence.*;
-
 @Entity
-@Table(name = "pdv_master")
+@Table(name = "pdvs_master_dimii")
 public class PdvMaster {
 
     @Id
-    private String msisdn;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_pdv_master")
+    private Long id;
 
     @Column(name = "nom_pdv")
     private String nomPdv;
 
     private String adresse;
+
+    @Column(name = "code_pdv")
     private String codePdv;
 
     public PdvMaster() {
     }
 
-    public PdvMaster(String msisdn, String nomPdv, String adresse, String codePdv) {
-        this.msisdn = msisdn;
+    public PdvMaster(String nomPdv, String adresse, String codePdv) {
         this.nomPdv = nomPdv;
         this.adresse = adresse;
         this.codePdv = codePdv;
     }
 
-    public String getMsisdn() {
-        return msisdn;
+    public Long getId() {
+        return id;
     }
 
-    public void setMsisdn(String msisdn) {
-        this.msisdn = msisdn;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getNomPdv() {

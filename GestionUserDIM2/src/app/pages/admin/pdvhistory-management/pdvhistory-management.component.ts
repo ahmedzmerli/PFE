@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {PdvService} from "../../../services/pdv.service";
+import { PdvService } from '../../../services/pdv.service';
 import { PdvHistory } from 'src/app/models/pdvhistory.model';
 
 @Component({
@@ -9,10 +9,7 @@ import { PdvHistory } from 'src/app/models/pdvhistory.model';
 })
 export class PdvhistoryManagementComponent implements OnInit {
   cols = [
-    { field: 'msisdn', header: 'MSISDN' },
-    { field: 'nomPdv', header: 'Nom PDV' },
-    { field: 'adresse', header: 'Adresse' },
-    { field: 'codePdv', header: 'Code PDV' },
+    { field: 'pdvMasterId', header: 'ID PDV' },
     { field: 'username', header: 'Utilisateur' },
     { field: 'actionType', header: 'Action' },
     { field: 'dateAction', header: 'Date action' }
@@ -21,7 +18,7 @@ export class PdvhistoryManagementComponent implements OnInit {
 
   histories: PdvHistory[] = [];
   filteredResults: PdvHistory[] = [];
-  msisdn: string = '';
+  pdvMasterId: string = '';
 
   constructor(private pdvHistoryService: PdvService) {}
 
@@ -41,13 +38,13 @@ export class PdvhistoryManagementComponent implements OnInit {
   }
 
   applyFilter() {
-    const search = this.msisdn.trim();
+    const search = this.pdvMasterId.trim();
     if (!search) {
       this.filteredResults = [...this.histories];
       return;
     }
     this.filteredResults = this.histories.filter(h =>
-      h.msisdn && h.msisdn.includes(search)
+      h.pdvMasterId && h.pdvMasterId.toString().includes(search)
     );
   }
 }

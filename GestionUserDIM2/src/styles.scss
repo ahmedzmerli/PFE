@@ -11,6 +11,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 // 🔴 Hover rouge Ooredoo sur sidebar
 .layout-menu a:hover {
+
   background-color: #ffe6e6 !important; // fond léger rouge
   color: #e60000 !important; // texte rouge
 }
@@ -52,4 +53,25 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   z-index: 1100 !important; // supérieur à celui de PrimeNG (z-index: 1000+)
 }
 
+
+
+:root {
+  --surface-card: #ffffff;
+  --text-color: #212529;
+  --text-color-secondary: #6c757d;
+  --surface-hover: #f1f1f1;
+  --primary-color: #e40622;
+  --primary-contrast-color: #ffffff;
+  // ...autres variables si besoin
+}
+
+/* Mode sombre */
+.app-dark {
+  --surface-card: #212529;
+  --text-color: #f8f9fa;
+  --text-color-secondary: #adb5bd;
+  --surface-hover: #343a40;
+  --primary-color: #e40622;
+  --primary-contrast-color: #ffffff;
+}
 

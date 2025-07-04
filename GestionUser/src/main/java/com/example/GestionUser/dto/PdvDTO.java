@@ -1,23 +1,21 @@
 package com.example.GestionUser.dto;
-
 public class PdvDTO {
 
     private String msisdn;
+    private Long idPdvMaster;
     private String nomPdv;
     private String adresse;
     private String codePdv;
 
-    public PdvDTO() {
-    }
+    public PdvDTO() {}
 
-    public PdvDTO(String msisdn, String nomPdv, String adresse, String codePdv) {
+    public PdvDTO(String msisdn, Long idPdvMaster, String nomPdv, String adresse, String codePdv) {
         this.msisdn = msisdn;
+        this.idPdvMaster = idPdvMaster;
         this.nomPdv = nomPdv;
         this.adresse = adresse;
         this.codePdv = codePdv;
     }
-
-    // Getters et Setters
 
     public String getMsisdn() {
         return msisdn;
@@ -25,6 +23,14 @@ public class PdvDTO {
 
     public void setMsisdn(String msisdn) {
         this.msisdn = msisdn;
+    }
+
+    public Long getIdPdvMaster() {
+        return idPdvMaster;
+    }
+
+    public void setIdPdvMaster(Long idPdvMaster) {
+        this.idPdvMaster = idPdvMaster;
     }
 
     public String getNomPdv() {

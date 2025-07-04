@@ -4,10 +4,7 @@ import java.time.LocalDateTime;
 
 public class PdvHistoryDTO {
 
-    private String msisdn;
-    private String nomPdv;
-    private String adresse;
-    private String codePdv;
+    private Long pdvMasterId;
     private String username;
     private String actionType;
     private LocalDateTime dateAction;
@@ -15,49 +12,19 @@ public class PdvHistoryDTO {
     public PdvHistoryDTO() {
     }
 
-    public PdvHistoryDTO(String msisdn, String nomPdv, String adresse, String codePdv,
-                         String username, String actionType, LocalDateTime dateAction) {
-        this.msisdn = msisdn;
-        this.nomPdv = nomPdv;
-        this.adresse = adresse;
-        this.codePdv = codePdv;
+    public PdvHistoryDTO(Long pdvMasterId, String username, String actionType, LocalDateTime dateAction) {
+        this.pdvMasterId = pdvMasterId;
         this.username = username;
         this.actionType = actionType;
         this.dateAction = dateAction;
     }
 
-    // Getters et Setters
-
-    public String getMsisdn() {
-        return msisdn;
+    public Long getPdvMasterId() {
+        return pdvMasterId;
     }
 
-    public void setMsisdn(String msisdn) {
-        this.msisdn = msisdn;
-    }
-
-    public String getNomPdv() {
-        return nomPdv;
-    }
-
-    public void setNomPdv(String nomPdv) {
-        this.nomPdv = nomPdv;
-    }
-
-    public String getAdresse() {
-        return adresse;
-    }
-
-    public void setAdresse(String adresse) {
-        this.adresse = adresse;
-    }
-
-    public String getCodePdv() {
-        return codePdv;
-    }
-
-    public void setCodePdv(String codePdv) {
-        this.codePdv = codePdv;
+    public void setPdvMasterId(Long pdvMasterId) {
+        this.pdvMasterId = pdvMasterId;
     }
 
     public String getUsername() {

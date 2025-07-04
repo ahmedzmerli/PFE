@@ -3,7 +3,7 @@
     <i class="pi pi-history me-2"></i> Historique des actions PDV
   </h2>
 
-  <!-- 🔧 Sélecteur de colonnes -->
+  <!-- Sélecteur de colonnes -->
   <div class="text-center mb-4">
     <h6 class="text-secondary fw-semibold mb-2">Sélection des colonnes à afficher</h6>
     <div class="d-flex justify-content-center align-items-center gap-3 flex-wrap">
@@ -26,27 +26,27 @@
     </div>
   </div>
 
-  <!-- 🔍 Barre de recherche -->
+  <!-- Barre de recherche -->
   <div class="card border-0 shadow-sm p-3 mb-4 bg-light">
     <div class="row g-3 align-items-end">
       <div class="col-md-6 col-lg-4 mx-auto">
-        <label class="form-label fw-semibold text-dark">Rechercher MSISDN</label>
+        <label class="form-label fw-semibold text-dark">Rechercher ID PDV</label>
         <div class="input-group">
           <span class="input-group-text bg-danger text-white"><i class="pi pi-search"></i></span>
           <input
             type="text"
             pInputText
-            [(ngModel)]="msisdn"
+            [(ngModel)]="pdvMasterId"
             (input)="applyFilter()"
             class="form-control border-danger"
-            placeholder="Ex: 22211234"
+            placeholder="Ex: 12"
           >
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Tableau des résultats -->
+  <!-- Tableau -->
   <p-table [value]="filteredResults" [columns]="selectedColumns"
            [paginator]="true" [rows]="10" [rowsPerPageOptions]="[5, 10, 20]"
            [scrollable]="true" scrollHeight="400px"

@@ -36,7 +36,7 @@ export class AppMenu implements OnInit {
 
     this.model = [
       {
-        label: 'Admin',
+        // label: 'Admin',
         items: [
           {
             label: 'Utilisateurs',
