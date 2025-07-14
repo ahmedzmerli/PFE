@@ -18,6 +18,7 @@ import static javax.persistence.FetchType.EAGER;
 
 @Entity
 @Table(name = "_user")
+//@Table(name = "users_dimii", schema = "ccadmin")
 @EntityListeners(AuditingEntityListener.class)
 public class User implements UserDetails, Principal {
 
@@ -25,12 +26,7 @@ public class User implements UserDetails, Principal {
     @GeneratedValue
 //    @Id
 //    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_seq")
-//    @SequenceGenerator(
-//            name = "user_seq",
-//            sequenceName = "CCADMIN.SEQ_USERS_DIMII", // nom exact de la séquence dans Oracle (avec ou sans CCADMIN selon config)
-//            allocationSize = 1
-//    )
-//    private Integer id;
+//    @SequenceGenerator(name = "user_seq", sequenceName = "ccadmin.seq_users_dimii", allocationSize = 1)
 
     private Integer id;
 
@@ -48,6 +44,11 @@ public class User implements UserDetails, Principal {
     private boolean enabled;
 
     @ManyToMany(fetch = EAGER)
+//    @JoinTable(
+//            name = "user_role_dimii",
+//            joinColumns = @JoinColumn(name = "user_id"),
+//            inverseJoinColumns = @JoinColumn(name = "role_id")
+//    )
     private Set<Role> roles;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)

@@ -3,5 +3,6 @@ export interface PdvHistory {
   username: string;
   actionType: string;
   dateAction: Date;
+  pdvName: string;
 }
 

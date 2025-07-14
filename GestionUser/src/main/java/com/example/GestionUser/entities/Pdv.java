@@ -2,8 +2,10 @@ package com.example.GestionUser.entities;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+//@Table(name = "pdv_dimii", schema = "ccadmin")
 public class Pdv {
 
     @Id

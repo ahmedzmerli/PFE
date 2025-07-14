@@ -22,11 +22,12 @@ public class PdvController {
         service.addPdv(dto, connectedUser.getName());
     }
 
-    @DeleteMapping("/{msisdn}")
+    @DeleteMapping("/{idPdvMaster}/delete-master")
     @PreAuthorize("hasAuthority('pdv.delete')")
-    public void delete(@PathVariable String msisdn, Principal connectedUser) {
-        service.deletePdv(msisdn, connectedUser.getName());
+    public void deletePdvMaster(@PathVariable Long idPdvMaster, Principal connectedUser) {
+        service.deletePdvMaster(idPdvMaster, connectedUser.getName());
     }
+
 
     @GetMapping
     @PreAuthorize("hasAuthority('pdv.read')")

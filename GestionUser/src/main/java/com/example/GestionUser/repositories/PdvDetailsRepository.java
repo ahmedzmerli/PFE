@@ -10,4 +10,5 @@ import java.util.List;
 @Repository
 public interface PdvDetailsRepository extends JpaRepository<PdvDetails, PdvDetailsId> {
     List<PdvDetails> findByPdvMasterId(Long pdvMasterId);
+    void deleteAllByPdvMasterId(Long pdvMasterId);
 }

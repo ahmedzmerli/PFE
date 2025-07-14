@@ -4,10 +4,12 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "pdv_details_dimii")
+//@Table(name = "pdv_details_dimii", schema = "ccadmin")
 @IdClass(PdvDetailsId.class)
 public class PdvDetails {
 
     @Id
+    @Column(name = "msisdn")
     private String msisdn;
 
     @Id

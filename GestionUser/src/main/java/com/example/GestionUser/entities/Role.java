@@ -13,14 +13,18 @@ import java.util.Set;
 
 @Entity
 @Table(name = "role")
+//@Table(name = "role_dimii", schema = "ccadmin")
 @EntityListeners(AuditingEntityListener.class)
 public class Role {
 
     @Id
     @GeneratedValue
+    //@Id
+    //    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "role_seq")
+    //    @SequenceGenerator(name = "role_seq", sequenceName = "ccadmin.seq_role_dimii", allocationSize = 1)
     private Integer id;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String name;
 
     @ManyToMany(mappedBy = "roles")
@@ -28,6 +32,11 @@ public class Role {
     private Set<User> user;
 
     @ManyToMany(fetch = FetchType.EAGER)
+    //@JoinTable(
+    //        name = "role_perm_list_dimii",
+    //        joinColumns = @JoinColumn(name = "role_id"),
+    //        inverseJoinColumns = @JoinColumn(name = "perm_list_id")
+    //    )
     @JoinTable(
             name = "role_permission_list",
             joinColumns = @JoinColumn(name = "role_id"),
@@ -36,11 +45,11 @@ public class Role {
     private List<PermissionList> permissionLists;
 
     @CreatedDate
-    @Column(nullable = false, updatable = false)
+    @Column(name = "created_date", nullable = false, updatable = false)
     private LocalDateTime created_date;
 
     @LastModifiedDate
-    @Column(insertable = false)
+    @Column(name = "last_modified_date", insertable = false)
     private LocalDateTime last_modified_date;
 
     public Role() {

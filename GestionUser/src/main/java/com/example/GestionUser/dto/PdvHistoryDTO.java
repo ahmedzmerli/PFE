@@ -8,6 +8,7 @@ public class PdvHistoryDTO {
     private String username;
     private String actionType;
     private LocalDateTime dateAction;
+    private String pdvName;
 
     public PdvHistoryDTO() {
     }
@@ -50,4 +51,12 @@ public class PdvHistoryDTO {
     public void setDateAction(LocalDateTime dateAction) {
         this.dateAction = dateAction;
     }
+    public String getPdvName() {
+        return pdvName;
+    }
+
+    public void setPdvName(String pdvName) {
+        this.pdvName = pdvName;
+    }
+
 }

@@ -75,3 +75,47 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   --primary-contrast-color: #ffffff;
 }
 
+
+/* Style général du menu */
+.layout-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Les sous-menus sont indentés */
+.layout-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  padding-left: 1rem; /* Indentation */
+  margin-top: 0.25rem; /* Petit espace au-dessus du sous-menu */
+
+}
+
+
+/* Lien du menu */
+.layout-menu a {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  text-decoration: none;
+  color: #333;
+  transition: background 0.2s;
+}
+
+/* Lien actif */
+.layout-menu a.active-route,
+.layout-menu a:hover {
+  background: #f1f1f1;
+}
+
+/* Icône du lien */
+.layout-menu .layout-menuitem-icon {
+  margin-right: 0.5rem;
+}
+
+/* Submenu toggler icône (le chevron) */
+.layout-menu .layout-submenu-toggler {
+  margin-left: auto;
+}

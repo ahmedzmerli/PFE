@@ -3,19 +3,24 @@ package com.example.GestionUser.entities;
 import javax.persistence.*;
 @Entity
 @Table(name = "pdvs_master_dimii")
+//@Table(name = "pdvs_master_dimii", schema = "ccadmin")
 public class PdvMaster {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@Id
+    //    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pdv_master_seq")
+    //    @SequenceGenerator(name = "pdv_master_seq", sequenceName = "ccadmin.seq_pdvs_master_dimii", allocationSize = 1)
+    //    @Column(name = "id_pdv_master")
     @Column(name = "id_pdv_master")
     private Long id;
 
-    @Column(name = "nom_pdv")
+    @Column(name = "pdv_name")
     private String nomPdv;
-
+    @Column(name = "address")
     private String adresse;
 
-    @Column(name = "code_pdv")
+    @Column(name = "pdv_code")
     private String codePdv;
 
     public PdvMaster() {

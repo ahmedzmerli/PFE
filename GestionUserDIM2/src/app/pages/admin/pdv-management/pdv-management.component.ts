@@ -218,8 +218,7 @@ export class PdvManagementComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         // On utilise le premier MSISDN pour identifier le PDV
-        const msisdn = row.msisdns[0];
-        this.pdvService.delete(msisdn).subscribe({
+        this.pdvService.deletePdvMaster(row.idPdvMaster).subscribe({
           next: () => {
             Swal.fire('Supprimé !', 'Le PDV a été supprimé.', 'success');
             this.loadPdvs();
@@ -228,6 +227,7 @@ export class PdvManagementComponent implements OnInit {
             Swal.fire('Erreur', 'La suppression a échoué.', 'error');
           }
         });
+
       }
     });
   }
@@ -348,6 +348,46 @@ export class PdvManagementComponent implements OnInit {
   }
 
 
+
+  handleFileInput(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (!input.files || input.files.length === 0) {
+      return;
+    }
+
+    const file = input.files[0];
+
+    Swal.fire({
+      title: 'Confirmer l\'import',
+      text: `Voulez-vous importer le fichier "${file.name}" ?`,
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#dc3545',
+      cancelButtonColor: '#6c757d',
+      confirmButtonText: 'Oui, importer',
+      cancelButtonText: 'Annuler'
+    }).then(result => {
+      if (result.isConfirmed) {
+        this.uploadExcel(file);
+      }
+    });
+
+
+  }
+
+
+  uploadExcel(file: File) {
+    this.pdvService.importExcel(file).subscribe({
+      next: () => {
+        Swal.fire('Succès', 'Le fichier a été importé avec succès.', 'success');
+        this.loadPdvs(); // Refresh la liste
+      },
+      error: (err) => {
+        console.error(err);
+        Swal.fire('Erreur', 'Erreur lors de l\'import du fichier.', 'error');
+      }
+    });
+  }
 
 
 }

@@ -13,11 +13,16 @@ import {TokenService} from "./token.service";
 })
 export class AuthService {
   private BASE_URL = 'http://localhost:8081/api/v1/auth';
+  private NewBase_URL = 'http://localhost:8081/api/v1';
 
   constructor(private http: HttpClient , private tokenService:TokenService) {}
 
+  // register(data: RegistrationRequest): Observable<void> {
+  //   return this.http.post<void>(`${this.BASE_URL}/register`, data);
+  // }
+
   register(data: RegistrationRequest): Observable<void> {
-    return this.http.post<void>(`${this.BASE_URL}/register`, data);
+    return this.http.post<void>(`${this.NewBase_URL}/users`, data);
   }
 
   authenticate(data: AuthenticationRequest): Observable<AuthenticationResponse> {

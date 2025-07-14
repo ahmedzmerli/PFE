@@ -43,6 +43,16 @@
         label="Lier MSISDN existants"
         (click)="openLinkModal()">
       </button>
+
+
+      <!-- Bouton Import Excel -->
+      <label for="importExcelInput" class="p-button p-button-rounded p-button-outlined p-button-danger shadow-sm" style="cursor: pointer;">
+        <i class="pi pi-file-excel me-2"></i> Importer Excel
+      </label>
+      <input type="file" id="importExcelInput" (change)="handleFileInput($event)"
+             accept=".xlsx, .xls"
+             style="display: none;" />
+
     </div>
   </div>
 

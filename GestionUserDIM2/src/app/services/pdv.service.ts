@@ -10,6 +10,7 @@ import {PdvHistory} from "../models/pdvhistory.model";
 })
 export class PdvService {
   private apiUrl = 'http://localhost:8081/api/v1/pdv';
+  private apiUrlImport = 'http://localhost:8081/api/v1/pdvs';
 
   constructor(private http: HttpClient) {}
 
@@ -87,6 +88,16 @@ export class PdvService {
 
   getHistory(): Observable<PdvHistory[]> {
     return this.http.get<PdvHistory[]>('http://localhost:8081/api/v1/pdv-history');
+  }
+  deletePdvMaster(idPdvMaster: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${idPdvMaster}/delete-master`);
+  }
+
+
+  importExcel(file: File): Observable<any> {
+    const formData = new FormData();
+    formData.append('file', file);
+    return this.http.post(`${this.apiUrlImport}/import`, formData ,{ responseType: 'text' });
   }
 
 }

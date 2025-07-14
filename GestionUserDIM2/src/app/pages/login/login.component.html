@@ -1,65 +1,67 @@
-<div class="login-page-wrapper d-flex justify-content-center align-items-center min-vh-100">
+<div class="login-page-wrapper">
+  <!-- Left Branding Section -->
+  <div class="branding-section">
+    
+  </div>
 
+  <!-- Right Login Section -->
+  <div class="login-section">
+    <div class="login-card shadow">
+      <div class="text-center mb-5">
+        <h3 class="fw-bold text-dark">Bienvenue sur <span class="text-danger">DIM2</span></h3>
+        <p class="text-muted">Connectez-vous pour accéder à votre espace</p>
+      </div>
 
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+        <!-- ✉️ Email -->
+        <div class="mb-4">
+          <label class="form-label text-dark fw-semibold">Email</label>
+          <input
+            type="email"
+            formControlName="email"
+            class="form-control rounded-pill shadow-sm"
+            placeholder="exemple@domaine.com"
+            [ngClass]="{ 'is-invalid': email.invalid && (email.dirty || email.touched) }"
+            aria-describedby="email-error"
+          />
+          <div id="email-error" class="invalid-feedback" *ngIf="email.invalid && (email.dirty || email.touched)">
+            {{ getErrorMessage('email') }}
+          </div>
+        </div>
 
-  <div class="login-card p-5 shadow rounded-5" style="width: 100%; max-width: 480px;">
-    <div class="text-center mb-4">
+        <!-- 🔒 Mot de passe -->
+        <div class="mb-4">
+          <label class="form-label text-dark fw-semibold">Mot de passe</label>
+          <p-password
+            formControlName="password"
+            [feedback]="false"
+            [toggleMask]="true"
+            placeholder="********"
+            inputStyleClass="form-control rounded-pill shadow-sm"
+            class="w-100"
+            [ngClass]="{ 'is-invalid': password.invalid && (password.dirty || password.touched) }"
+            aria-describedby="password-error"
+          ></p-password>
+          <div id="password-error" class="invalid-feedback" *ngIf="password.invalid && (password.dirty || password.touched)">
+            {{ getErrorMessage('password') }}
+          </div>
+        </div>
 
-      <h3 class="fw-bold text-dark">Bienvenue sur <span class="text-danger">DIM2</span></h3>
-      <p class="text-muted">Connectez-vous pour continuer</p>
+        <!-- 🔘 Connexion -->
+        <button
+          type="submit"
+          class="btn btn-danger w-100 rounded-pill fw-semibold"
+          [disabled]="form.invalid"
+        >
+          <i class="pi pi-sign-in me-2"></i>SE CONNECTER
+        </button>
+
+        <!-- ⚠️ Erreur -->
+        <div *ngIf="error" class="alert alert-danger mt-4">
+          {{ error }}
+        </div>
+      </form>
     </div>
-
-    <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
-      <!-- ✉️ Email -->
-      <div class="mb-4">
-        <label class="form-label text-dark fw-semibold">Email</label>
-        <input
-          type="email"
-          formControlName="email"
-          class="form-control rounded-pill shadow-sm px-4 py-2"
-          placeholder="exemple@domaine.com"
-          [ngClass]="{ 'is-invalid': email.invalid && (email.dirty || email.touched) }"
-        />
-        <div class="invalid-feedback" *ngIf="email.invalid && (email.dirty || email.touched)">
-          {{ getErrorMessage('email') }}
-        </div>
-      </div>
-
-      <!-- 🔒 Mot de passe -->
-      <!-- 🔒 Mot de passe -->
-      <div class="mb-4">
-        <label class="form-label text-dark fw-semibold">Mot de passe</label>
-        <p-password
-          formControlName="password"
-          [feedback]="false"
-          [toggleMask]="true"
-          placeholder="********"
-          inputStyleClass="form-control rounded-pill shadow-sm px-4 py-2"
-          class="w-100"
-          [ngClass]="{ 'is-invalid': password.invalid && (password.dirty || password.touched) }"
-        ></p-password>
-        <div class="invalid-feedback" *ngIf="password.invalid && (password.dirty || password.touched)">
-          {{ getErrorMessage('password') }}
-        </div>
-      </div>
-
-
-
-      <!-- 🔘 Connexion -->
-      <button
-        type="submit"
-        class="btn btn-danger w-100 rounded-pill fw-semibold shadow-sm py-2"
-        [disabled]="form.invalid"
-      >
-        <i class="pi pi-sign-in me-2"></i>SE CONNECTER
-      </button>
-
-      <!-- ⚠️ Erreur -->
-      <div *ngIf="error" class="alert alert-danger mt-3 p-2 text-center small">
-        {{ error }}
-      </div>
-    </form>
-
   </div>
 </div>
 

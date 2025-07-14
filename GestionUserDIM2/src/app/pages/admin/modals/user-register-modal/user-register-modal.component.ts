@@ -46,7 +46,7 @@ export class UserRegisterModalComponent {
         this.error = '';
         localStorage.setItem('activationEmail', email);
         localStorage.setItem('adminActivation', 'true');
-        this.router.navigate(['/activate-account']);
+        this.router.navigate(['/users']);
         this.userCreated.emit();
         this.close.emit();
       },

@@ -8,16 +8,25 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "permission_list")
+//@Table(name = "perm_list_dimii", schema = "ccadmin")
 public class PermissionList {
 
     @Id
     @GeneratedValue
+    //@Id
+    //    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "perm_list_seq")
+    //    @SequenceGenerator(name = "perm_list_seq", sequenceName = "ccadmin.seq_perm_list_dimii", allocationSize = 1)
     private Integer id;
 
-    @Column(unique = true)
+    @Column(name = "list_name", unique = true, nullable = false)
     private String name; // ex: PL1, AdminPL
 
     @ManyToMany(fetch = FetchType.EAGER)
+    //@JoinTable(
+    //        name = "permlist_perm_dimii",
+    //        joinColumns = @JoinColumn(name = "perm_list_id"),
+    //        inverseJoinColumns = @JoinColumn(name = "perm_id")
+    //    )
     private Set<Permission> permissions;
 
     @ManyToMany(mappedBy = "permissionLists")

@@ -56,20 +56,40 @@ export class AppMenu implements OnInit {
             routerLink: ['/liste-roles'],
             visible: permissions.includes('roles.read')
           },
+          // {
+          //   label: 'Blacklist',
+          //   icon: 'pi pi-fw pi-ban',
+          //   routerLink: ['/blacklist'],
+          //   visible: permissions.includes('blacklist.read')
+          // },
+          //
+          // {
+          //   label: 'Historique',
+          //   icon: 'pi pi-history',
+          //   routerLink: ['/historique'],
+          //   visible: permissions.includes('blhistory.read')
+          // },
           {
             label: 'Blacklist',
             icon: 'pi pi-fw pi-ban',
-            routerLink: ['/blacklist'],
-            visible: permissions.includes('blacklist.read')
+            visible:
+              permissions.includes('blacklist.read') ||
+              permissions.includes('blhistory.read'),
+            items: [
+              {
+                label: 'Gestion Blacklist',
+                icon: 'pi pi-fw pi-ban',
+                routerLink: ['/blacklist'],
+                visible: permissions.includes('blacklist.read')
+              },
+              {
+                label: 'Historique',
+                icon: 'pi pi-fw pi-history',
+                routerLink: ['/historique'],
+                visible: permissions.includes('blhistory.read')
+              }
+            ]
           },
-
-          {
-            label: 'Historique',
-            icon: 'pi pi-history',
-            routerLink: ['/historique'],
-            visible: permissions.includes('blhistory.read')
-          },
-
 
           {
             label: 'Dashboard',

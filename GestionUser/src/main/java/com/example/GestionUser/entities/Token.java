@@ -5,17 +5,24 @@ import java.time.LocalDateTime;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
+//@Table(name = "token_dimii", schema = "ccadmin")
 public class Token {
 
     @Id
     @GeneratedValue
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "token_seq")
+//    @SequenceGenerator(name = "token_seq", sequenceName = "ccadmin.seq_token_dimii", allocationSize = 1)
     private Integer id;
 
-    @Column(unique = true)
+    @Column(name = "token_value", unique = true)
     private String token;
 
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
+    @Column(name = "expires_at")
     private LocalDateTime expiresAt;
+    @Column(name = "validated_at")
     private LocalDateTime validatedAt;
 
     @ManyToOne

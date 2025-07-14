@@ -5,15 +5,20 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "pdv_history_dimii")
+//@Table(name = "pdv_history_dimii", schema = "ccadmin")
 public class PdvHistory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@Id
+    //    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pdv_history_seq")
+    //    @SequenceGenerator(name = "pdv_history_seq", sequenceName = "ccadmin.seq_pdv_history_dimii", allocationSize = 1)
     private Long id;
 
     @Column(name = "id_pdv_master")
     private Long pdvMasterId;
 
+    @Column(name = "user_name")
     private String username;
 
     @Column(name = "action_type")

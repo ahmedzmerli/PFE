@@ -1,21 +1,26 @@
 package com.example.GestionUser.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
 @Table(name = "permission")
+//@Table(name = "permission_dimii", schema = "ccadmin")
 public class Permission {
 
     @Id
     @GeneratedValue
+    //@Id
+    //    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "perm_seq")
+    //    @SequenceGenerator(name = "perm_seq", sequenceName = "ccadmin.seq_permission_dimii", allocationSize = 1)
     private Integer id;
 
+    @Column(name = "feature", nullable = false)
     private String feature; // ex: "blacklist"
+    @Column(name = "action", nullable = false)
     private String action;  // ex: "read"
+
+
 
     public Permission() {
     }

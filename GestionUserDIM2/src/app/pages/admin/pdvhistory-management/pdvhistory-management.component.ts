@@ -9,7 +9,8 @@ import { PdvHistory } from 'src/app/models/pdvhistory.model';
 })
 export class PdvhistoryManagementComponent implements OnInit {
   cols = [
-    { field: 'pdvMasterId', header: 'ID PDV' },
+    // { field: 'pdvMasterId', header: 'ID PDV' },
+    { field: 'pdvName', header: 'Nom PDV' },
     { field: 'username', header: 'Utilisateur' },
     { field: 'actionType', header: 'Action' },
     { field: 'dateAction', header: 'Date action' }

@@ -56,6 +56,12 @@ public class PdvImportService {
 
                 if (msisdn == null || msisdn.isEmpty()) continue;
 
+                // ✅ Vérifier si le MSISDN existe déjà
+                if (pdvRepository.existsById(msisdn)) {
+                    System.out.println("MSISDN déjà existant : " + msisdn + ", ignoré.");
+                    continue; // On passe à la ligne suivante
+                }
+
                 // 1. Créer le PDV master
                 PdvMaster pdvMaster = new PdvMaster();
                 pdvMaster.setNomPdv(nomPdv);
@@ -86,6 +92,7 @@ public class PdvImportService {
             throw new RuntimeException("Erreur lors de l'import du fichier Excel", e);
         }
     }
+
 
 
     private String getCellValue(Cell cell) {

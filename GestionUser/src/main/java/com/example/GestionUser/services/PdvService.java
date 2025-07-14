@@ -50,28 +50,41 @@ public class PdvService {
     }
 
     @Transactional
-    public void deletePdv(String msisdn, String username) {
-        if (!pdvRepository.existsById(msisdn)) {
-            throw new IllegalStateException("Le MSISDN n'existe pas");
-        }
+    public void deletePdvMaster(Long pdvMasterId, String username) {
+        // Vérifier que le PDV existe
+        PdvMaster pdvMaster = pdvMasterRepository.findById(pdvMasterId)
+                .orElseThrow(() -> new IllegalStateException("PDV introuvable"));
 
-        List<PdvDetails> detailsList = pdvDetailsRepository.findAll().stream()
-                .filter(d -> d.getMsisdn().equals(msisdn))
+        // Récupérer tous les MSISDNs liés à ce PDV
+        List<String> msisdns = pdvDetailsRepository.findByPdvMasterId(pdvMasterId)
+                .stream()
+                .map(PdvDetails::getMsisdn)
                 .collect(Collectors.toList());
 
-        for (PdvDetails d : detailsList) {
-            pdvDetailsRepository.delete(d);
+        // Supprimer les liaisons
+        pdvDetailsRepository.deleteAllByPdvMasterId(pdvMasterId);
 
-            PdvHistory history = new PdvHistory();
-            history.setPdvMasterId(d.getPdvMasterId());
-            history.setUsername(username);
-            history.setActionType("DELETE");
-            history.setDateAction(LocalDateTime.now());
-            pdvHistoryRepository.save(history);
+        // Pour chaque MSISDN, vérifier s'il est encore lié à un autre PDV, et supprimer s'il n'est plus utilisé
+        for (String msisdn : msisdns) {
+            boolean stillLinked = pdvDetailsRepository.findAll().stream()
+                    .anyMatch(d -> d.getMsisdn().equals(msisdn));
+            if (!stillLinked) {
+                pdvRepository.deleteById(msisdn);
+            }
         }
 
-        pdvRepository.deleteById(msisdn);
+        // Supprimer le PdvMaster
+        pdvMasterRepository.delete(pdvMaster);
+
+        // Historique
+        PdvHistory history = new PdvHistory();
+        history.setPdvMasterId(pdvMasterId);
+        history.setUsername(username);
+        history.setActionType("DELETE_PDV_MASTER");
+        history.setDateAction(LocalDateTime.now());
+        pdvHistoryRepository.save(history);
     }
+
 
     public List<PdvDTO> listAll() {
         return pdvDetailsRepository.findAll().stream().map(d -> {
@@ -110,6 +123,7 @@ public class PdvService {
         pdvHistoryRepository.save(history);
     }
 
+
     @Transactional
     public void removeMsisdnFromPdv(Long pdvMasterId, String msisdn, String username) {
         PdvDetailsId detailsId = new PdvDetailsId(msisdn, pdvMasterId);
@@ -117,9 +131,19 @@ public class PdvService {
             throw new IllegalStateException("Le MSISDN n'est pas lié à ce PDV");
         }
 
+        // Supprimer la liaison spécifique
         pdvDetailsRepository.deleteById(detailsId);
-        pdvRepository.deleteById(msisdn);
 
+        // Vérifier si le MSISDN est encore lié à d'autres PDVs
+        boolean stillLinked = pdvDetailsRepository.findAll().stream()
+                .anyMatch(d -> d.getMsisdn().equals(msisdn));
+
+        if (!stillLinked) {
+            // Si plus aucun lien, supprimer le MSISDN dans la table pdv
+            pdvRepository.deleteById(msisdn);
+        }
+
+        // Historique
         PdvHistory history = new PdvHistory();
         history.setPdvMasterId(pdvMasterId);
         history.setUsername(username);
@@ -127,6 +151,7 @@ public class PdvService {
         history.setDateAction(LocalDateTime.now());
         pdvHistoryRepository.save(history);
     }
+
 
     public List<String> listMsisdnsByPdv(Long pdvMasterId) {
         return pdvDetailsRepository.findByPdvMasterId(pdvMasterId).stream()
