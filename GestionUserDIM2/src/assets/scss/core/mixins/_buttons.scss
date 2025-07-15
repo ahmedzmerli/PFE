@@ -1,3 +1,35 @@
+// Ajouté car manquant dans Bootstrap 5
+@mixin hover {
+  &:hover {
+    @content;
+  }
+}
+
+@mixin hover-focus {
+  &:hover,
+  &:focus {
+    @content;
+  }
+}
+
+@mixin hover-focus-active {
+  &:hover,
+  &:focus,
+  &:active {
+    @content;
+  }
+}
+
+// Ajouté car manquant dans Bootstrap 5
+@mixin plain-hover-focus {
+  &:hover,
+  &:focus {
+    @content;
+  }
+}
+
+
+
 // from bs mixins/buttons button-variant
 @mixin bmd-button-variant($color, $background, $focus-background, $active-background, $border, $focus-border, $active-border) {
   color: $color;

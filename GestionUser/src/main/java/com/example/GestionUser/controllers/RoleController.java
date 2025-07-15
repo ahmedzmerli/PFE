@@ -2,10 +2,12 @@ package com.example.GestionUser.controllers;
 
 import com.example.GestionUser.entities.PermissionList;
 import com.example.GestionUser.entities.Role;
+import com.example.GestionUser.entities.User;
 import com.example.GestionUser.handler.BusinessErrorCodes;
 import com.example.GestionUser.handler.BusinessException;
 import com.example.GestionUser.repositories.PermissionListRepository;
 import com.example.GestionUser.repositories.RoleRepository;
+import com.example.GestionUser.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -18,6 +20,7 @@ import java.util.*;
 @RequiredArgsConstructor
 public class RoleController {
 
+    private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PermissionListRepository permissionListRepository;
 
@@ -74,6 +77,7 @@ public class RoleController {
     }
 
     // ✅ Supprimer un rôle
+
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('roles.delete')")
     public ResponseEntity<?> deleteRole(@PathVariable Integer id) {
@@ -81,14 +85,26 @@ public class RoleController {
                 .orElseThrow(() -> new BusinessException(BusinessErrorCodes.ROLE_NOT_FOUND));
 
         try {
+            // Retirer les associations avec les listes de permissions
             role.getPermissionLists().clear();
             roleRepository.save(role);
+
+            // Retirer les associations avec les utilisateurs
+            List<User> usersWithRole = userRepository.findByRoles_Id(id);
+            for (User user : usersWithRole) {
+                user.getRoles().remove(role);
+            }
+            userRepository.saveAll(usersWithRole);
+
+            // Supprimer le rôle
             roleRepository.delete(role);
+
             return ResponseEntity.noContent().build();
         } catch (Exception e) {
             throw new BusinessException(BusinessErrorCodes.ROLE_DELETE_FAILED);
         }
     }
+
 
 
     // ✅ Lister les listes de permissions d’un rôle
